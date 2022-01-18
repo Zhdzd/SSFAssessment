@@ -84,6 +84,7 @@ public class DetailService {
             // get from ccache
             // put into book
             // return book
+            return null;
         }
     }
 }
