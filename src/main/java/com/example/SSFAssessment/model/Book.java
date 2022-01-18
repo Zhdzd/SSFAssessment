@@ -63,7 +63,7 @@ public class Book {
     public static Book create(JsonObject jObj){
         Book book = new Book();
         book.setTitle(jObj.getString("title"));
-        book.setWorksId(jObj.getString("key"));
+        book.setWorksId(jObj.getString("key").replace("works","book"));
         return book;
     }
     public static Book create(String jsonString){

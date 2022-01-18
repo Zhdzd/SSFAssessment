@@ -2,6 +2,7 @@ package com.example.SSFAssessment.service;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.List;
 
 import com.example.SSFAssessment.model.Book;
@@ -23,8 +24,9 @@ import jakarta.json.JsonReader;
 public class DetailService {
         private static final Logger logger = LoggerFactory.getLogger(DetailService.class);
         private String UrlDetails = "https://openlibrary.org/";
+        
 
-    public Book book(String worksId){
+    public Book getBook(String worksId){
 
         String url = UrlDetails +  worksId + (".json");
 
@@ -40,20 +42,18 @@ public class DetailService {
 
             JsonArray excerptArray = data.getJsonArray("excerpts");
             JsonObject excerptObject = excerptArray.getJsonObject(0);
+            String excerpt = excerptObject.getString("excerpt");
 
-        
+            Book bookDetails = new Book();
+            bookDetails.getTitle();
+            bookDetails.getDescription();
+            bookDetails.getExcerpt();
 
-
-
-            
-            
-            
+            return  bookDetails;
+        } catch(Exception ex){
+            return null;
         }
         
-
-
-
-
-
+        
     }
 }
