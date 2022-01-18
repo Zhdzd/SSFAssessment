@@ -9,12 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.SSFAssessment.model.Book;
 import com.example.SSFAssessment.service.DetailService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 
+
+@Controller
 @RequestMapping(path = "/book", produces=MediaType.TEXT_HTML_VALUE)
 public class BookController {
 
+    @Autowired
     private DetailService detailService;
 
     @GetMapping(path ="{worksId}" )
@@ -23,7 +27,7 @@ public class BookController {
         Book book = detailService.getBook(worksId);
         model.addAttribute("worksId", worksId);
         model.addAttribute("book", book);
-        
+
         return "detail";
 
     }

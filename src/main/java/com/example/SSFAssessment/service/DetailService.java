@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.example.SSFAssessment.model.Book;
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +24,13 @@ import jakarta.json.JsonReader;
 @Service
 public class DetailService {
         private static final Logger logger = LoggerFactory.getLogger(DetailService.class);
-        private String UrlDetails = "https://openlibrary.org/";
+        private String UrlDetails = "https://openlibrary.org/works/";
         
 
     public Book getBook(String worksId){
 
         String url = UrlDetails +  worksId + (".json");
-
+        logger.info("URL has been set" + url);
         RequestEntity<Void> req = RequestEntity.get(url).build();
         RestTemplate template = new RestTemplate();
         ResponseEntity<String> resp = template.exchange(req, String.class);
@@ -39,18 +40,25 @@ public class DetailService {
             JsonReader reader = Json.createReader(is);
             JsonObject data = reader.readObject();
             String description = data.getString("description");
+            String title = data.getString("title");
+
+            logger.info(">> description taken as string");
 
             JsonArray excerptArray = data.getJsonArray("excerpts");
+            logger.info(">>JsonArray created....");
             JsonObject excerptObject = excerptArray.getJsonObject(0);
+            logger.info(">>>excerptObject created");
             String excerpt = excerptObject.getString("excerpt");
 
+
             Book bookDetails = new Book();
-            bookDetails.getTitle();
-            bookDetails.getDescription();
-            bookDetails.getExcerpt();
+            bookDetails.setTitle(title);
+            bookDetails.setDescription(description);
+            bookDetails.setExcerpt(excerpt);
 
             return  bookDetails;
         } catch(Exception ex){
+            ex.printStackTrace();
             return null;
         }
         
