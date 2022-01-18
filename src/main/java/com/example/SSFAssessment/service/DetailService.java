@@ -2,6 +2,7 @@ package com.example.SSFAssessment.service;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -66,8 +67,13 @@ public class DetailService {
                 bookDetails.setDescription(description);
                 bookDetails.setExcerpt(excerpt);
     
+                List<String> forCache = new ArrayList<>();
+                forCache.add(bookDetails.getTitle());
+                forCache.add(bookDetails.getDescription());
+                forCache.add(bookDetails.getExcerpt());
+
                 // save to cache 
-                bookRepo.save();
+                bookRepo.save(worksId, forCache.toString());
 
                 return  bookDetails;
             } catch(Exception ex){
