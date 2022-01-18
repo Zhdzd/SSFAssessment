@@ -55,8 +55,8 @@ public class BookService {
             JsonObject data = reader.readObject();
             JsonArray searchResults = data.getJsonArray("docs");
 
-            String key = data.getString("key");
-            String title = data.getString("title");
+            //String key = data.getString("key");
+            //String title = data.getString("title");
 
             return searchResults.stream()
                 .map(v -> (JsonObject)v)

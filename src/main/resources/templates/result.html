@@ -12,7 +12,7 @@
         <h1 data-th-text="|Search result for '${searchBook}'|"></h1>
         <ul>
         <li data-th-each ="result: ${results}">
-            <a data-th-text="${result}"></a>
+            <a data-th-href="${result.worksId}" data-th-text="${result.title}"></a>
         </li>
         </ul>
 
