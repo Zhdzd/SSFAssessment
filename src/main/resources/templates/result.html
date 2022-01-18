@@ -4,10 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Results</title>
+    <title>Book Results</title>
 </head>
 <body>
-    <h1>Search result for '<code data-th-text="${book}"></code>'</h1>
+    <div class="container"> <!---Container-->
+        <div>
+        <h1 data-th-text="|Search result for '${searchBook}'|"></h1>
+        <ul>
+        <li data-th-each ="result: ${results}">
+            <a data-th-text="${result}"></a>
+        </li>
+        </ul>
+
+
+        </div>
     <button onclick="goBack()">Back</button>
+    </div> <!---Container-->
 </body>
 </html>

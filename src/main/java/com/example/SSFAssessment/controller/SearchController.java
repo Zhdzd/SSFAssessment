@@ -1,5 +1,8 @@
 package com.example.SSFAssessment.controller;
 
+import java.util.List;
+
+import com.example.SSFAssessment.model.Book;
 import com.example.SSFAssessment.service.BookService;
 
 import org.slf4j.Logger;
@@ -18,12 +21,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class SearchController {
     private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
 
-   // @Autowired
-    //private BookService bookService;
+   @Autowired
+    private BookService bookService;
 
     @GetMapping
-    public String getBooks(@RequestParam(required=true) String book, Model model){
-        model.addAttribute("book", book.toUpperCase());
+    public String getBooks(@RequestParam(required=true) String searchBook, Model model){
+        String bookForQuery = searchBook.replace(" ", "+");
+        List<Book> results = bookService.search(bookForQuery);
+        model.addAttribute("searchBook", searchBook.toUpperCase());
+        model.addAttribute("results" , results);
         return "result";
     }
     
