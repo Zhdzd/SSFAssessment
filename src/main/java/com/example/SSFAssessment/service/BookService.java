@@ -2,7 +2,11 @@ package com.example.SSFAssessment.service;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.naming.directory.SearchResult;
 
 import com.example.SSFAssessment.model.Book;
 
@@ -43,14 +47,23 @@ public class BookService {
             throw new IllegalArgumentException("Error");
 
             String body = resp.getBody();
+
         try(InputStream is = new ByteArrayInputStream(body.getBytes())){
             JsonReader reader = Json.createReader(is);
             JsonObject data = reader.readObject();
-            JsonArray searchResults = data.getJsonArray("");
+            JsonArray searchResults = data.getJsonArray("docs");
+
+            String key = data.getString("key");
+            String title = data.getString("title");
+
+            return searchResults.stream()
+                .map(v -> (JsonObject)v)
+                .map(Book::create)
+                .collect(Collectors.toList());
           
-        }catch (Exception ex){}
-        
-
-
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return Collections.EMPTY_LIST;
     }
 }
